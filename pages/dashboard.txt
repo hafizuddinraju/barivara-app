@@ -1,0 +1,30 @@
+import Blog from "./blog";
+import Commondashboard from "./dashboard/commondashboard";
+
+const Dashboard = () => {
+    return (
+        <div>
+            
+            <div className="drawer drawer-mobile">
+  <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+  <div className="drawer-content">
+    {/* Page content here */}
+    <Commondashboard></Commondashboard>
+   
+    
+  </div> 
+  <div className="drawer-side">
+    <label htmlFor="my-drawer" className="drawer-overlay"></label>
+    <ul className="menu pt-10  mt-16 md:mt-20  p-4 w-60 bg-green-500 text-base-content">
+      {/* <!-- Sidebar content here --> */}
+      <li className="text-white font-semibold"><a>Sidebar Item 1</a></li>
+      <li className="text-white font-semibold"><a>Sidebar Item 2</a></li>
+      
+    </ul>
+  </div>
+</div>
+        </div>
+    );
+};
+
+export default Dashboard;
