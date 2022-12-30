@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import { Footer } from '../components/Shared/Footer/Footer';
 import { store } from '../store';
 import {SessionProvider} from 'next-auth/react'
-import '../styles/globals.css'
+import './styles/globals.css'
 
 export default function App({ Component, pageProps, session }) {
   return (
