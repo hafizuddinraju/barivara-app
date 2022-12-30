@@ -1,5 +1,7 @@
-import connectMongo from '../../../database/conn'
-import { getRoom, putRoom, deleteRoom } from '../../../database/controller';
+
+import connectMongo from '../../../database/conn';
+import { deleteRoom, getRoom, putRoom } from '../../../database/controller';
+
 
 export default async function handler(req, res) {
     

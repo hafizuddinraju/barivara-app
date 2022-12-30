@@ -5,6 +5,7 @@ import Spinner from "../../components/Spinner";
 import { fetchRooms } from "../../features/Rooms/roomsSlice";
 
 
+
 const Rooms = () => {
   const { isLoading, rooms, error } = useSelector((state) => state.rooms);
   console.log(rooms);
