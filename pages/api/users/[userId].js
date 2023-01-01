@@ -1,5 +1,6 @@
 import connectMongo from "../../../database/conn";
-import { deleteUser, getUsers, postUser, putUser } from "../../../dataBase/controllerUsers";
+import { deleteUser, getUser, putUser } from "../../../dataBase/controllerUsers";
+
 
 
 
@@ -10,19 +11,16 @@ export default async function handler(req, res) {
     const { method } = req
 
     switch(method){
-        // case 'GET' :
-        //     //res.status(200).json({method,name:'Get'})
-        //     getUsers(req, res)
-        //     break;
-        case 'POST':
-            postUser(req, res)
+       
+        case 'GET':
+            getUser(req, res)
             break;
-        // case 'PUT':
-        //     putUser(req, res)
-        //     break;
-        // case 'DELETE':
-        //     deleteUser(req, res)
-        //     break;
+        case 'PUT':
+            putUser(req, res)
+            break;
+        case 'DELETE':
+            deleteUser(req, res)
+            break;
         default : 
             res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
             res.status(405).end(`Method ${method} Not Allowd`)

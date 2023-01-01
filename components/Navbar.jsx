@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
@@ -11,12 +11,13 @@ const Navbar = () => {
   const [color, setColor] = useState('transparent');
   const [textColor, setTextColor] = useState('white');
   const {data:session} = useSession();
+  console.log(session)
   const router = useRouter();
   useEffect(()=>{
     if(router.route == '/'){
       if(textColor){
 
-        setTextColor( 'black'||'white')
+        setTextColor( 'gray'||'white')
       }
       else{
         setTextColor('white')
@@ -32,6 +33,7 @@ const Navbar = () => {
   },[router.route, color])
   
   const handleSignout = ()=>{
+    
      signOut();
     
     

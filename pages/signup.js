@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import { registerValidate } from '../lib/validate'
 import { useRouter } from 'next/router';
+import { addUser } from '../lib/helperUser';
 
 export default function Register(){
 
@@ -17,6 +18,7 @@ export default function Register(){
         initialValues: {
             username : '',
             email: '',
+            role:'user',
             password: '',
             cpassword: ''
         },
@@ -24,18 +26,17 @@ export default function Register(){
         onSubmit
     })
 
-    async function onSubmit(values){
-        const options = {
-            method: "POST",
-            headers : { 'Content-Type': 'application/json'},
-            body: JSON.stringify(values)
-        }
 
-        await fetch('http://localhost:3000/api/auth/signup', options)
-            .then(res => res.json())
-            .then((data) => {
-                if(data) router.push('/')
-            })
+    async function onSubmit(values){
+        console.log(values)
+       
+        await addUser(values).then(res =>{
+            if(res){
+                router.push('/login')
+            }
+        })
+
+       
     }
 
     return (

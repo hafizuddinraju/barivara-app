@@ -1,12 +1,44 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
+import{useSession, signOut} from 'next-auth/react'
 
 
 const NavbarCommon = () => {
   const [nav, setNav] = useState(false);
   const [color, setColor] = useState('transparent');
-  const [textColor, setTextColor] = useState('black');
+  const [textColor, setTextColor] = useState('white');
+  const {data:session} = useSession();
+  console.log(session)
+  const router = useRouter();
+  useEffect(()=>{
+    if(router.route == '/'){
+      if(textColor){
+
+        setTextColor( 'black'||'white')
+      }
+      else{
+        setTextColor('white')
+
+      }
+      
+    }
+    else{
+      setTextColor('black')
+      setColor('white')
+    }
+
+  },[router.route, color])
+  
+  const handleSignout = ()=>{
+     signOut();
+    
+    
+  }
+ 
+  
 
 
   const handleNav = () => {
@@ -14,12 +46,13 @@ const NavbarCommon = () => {
   };
 
   useEffect(() => {
+   
     const changeColor = () => {
       if (window.scrollY >= 90) {
         setColor('#ffffff');
         setTextColor('#000000');
       } else {
-        setColor('gray');
+        setColor('transparent');
         setTextColor('#ffffff');
       }
     };
@@ -28,7 +61,7 @@ const NavbarCommon = () => {
   const menu = <>
         <li className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
             <Link
-              href="/home"
+              href="/"
               aria-label="home"
               title="home"
               className={({isActive})=>isActive?"font-medium tracking-wide text-primary transition-colors duration-200 hover:text-deep-purple-accent-400":"font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"}
@@ -48,12 +81,12 @@ const NavbarCommon = () => {
         </li>
         <li className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
             <Link
-              href="/categories"
-              aria-label="categories"
-              title="categories"
+              href="/rooms"
+              aria-label="rooms"
+              title="rooms"
               className={({isActive})=>isActive?"font-medium tracking-wide text-primary transition-colors duration-200 hover:text-deep-purple-accent-400":"font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"}
             >
-              Categories
+             Rooms
             </Link>
         </li>
         <li className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
@@ -77,7 +110,10 @@ const NavbarCommon = () => {
            Contact
           </Link>
       </li>
-          <li className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
+      {
+        session?.user?
+        <>
+         <li  className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
           <Link
             href="/dashboard"
             aria-label="dashboard"
@@ -87,6 +123,25 @@ const NavbarCommon = () => {
            Dashboard
           </Link>
       </li>
+      <li aria-label="dashboard"
+      onClick={ ()=>handleSignout()}
+            title="logout"
+             className='hover:border-b-2 p-6 font-semibold border-b-green-500 duration-100'>
+          
+           <FiLogOut className='text-2xl'></FiLogOut>
+          
+      </li>
+
+        
+        </>
+        :
+        ' '
+      }
+      
+     
+
+      
+        
       
     
     </>
@@ -100,9 +155,13 @@ const NavbarCommon = () => {
     >
       
       <div className='max-w-[1240px] m-auto flex justify-between items-center p-4 text-white'>
+      <label htmlFor="my-drawer" className="sm:block md:hidden drawer-button"><AiOutlineMenu size={20} style={{ color: `${textColor}` }} /></label>
         <Link href='/'>
           <h1 style={{ color: `${textColor}` }} className='font-bold text-4xl'>
+            
+
            <span className='text-green-500'>Bari</span>vara
+            
           </h1>
         </Link>
         <ul style={{ color: `${textColor}` }} className='hidden sm:flex'>
@@ -133,7 +192,7 @@ const NavbarCommon = () => {
               <Link href='/about'>About Us</Link>
             </li>
             <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-              <Link href='/categories'>Categories</Link>
+              <Link href='/rooms'>Rooms</Link>
             </li>
             <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
               <Link href='/blog'>Blog</Link>
