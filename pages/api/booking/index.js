@@ -1,6 +1,5 @@
-import connectMongo from "../../../database/conn";
-import { deleteUser, getUser, putUser } from "../../../dataBase/controllerUsers";
-
+import connectMongo from "../../../dataBase/conn";
+import { deleteBooking, getBookings, postBooking } from "../../../dataBase/controllerBooking";
 
 
 export default async function handler(req, res) {
@@ -10,15 +9,16 @@ export default async function handler(req, res) {
     const { method } = req
 
     switch(method){
-       
-        case 'GET':
-            getUser(req, res)
+        case 'GET' :
+            //res.status(200).json({method,name:'Get'})
+            getBookings(req, res)
             break;
-        case 'PUT':
-            putUser(req, res)
+        case 'POST':
+            postBooking(req, res)
             break;
+        
         case 'DELETE':
-            deleteUser(req, res)
+            deleteBooking(req, res)
             break;
         default : 
             res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);

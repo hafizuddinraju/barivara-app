@@ -3,7 +3,8 @@ import GoogleProvider from 'next-auth/providers/google'
 import connectMongo from "../../../dataBase/conn";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { compare } from 'bcryptjs';
-import Users from "../../../model/Schema";
+import AllUsers from "../../../model/userSchema";
+
 export default NextAuth({
     providers:[
         GoogleProvider({
@@ -16,7 +17,7 @@ export default NextAuth({
                 connectMongo().catch(error => { error: "Connection Failed...!"})
 
                 // check user existance
-                const result = await Users.findOne( { email : credentials.email})
+                const result = await AllUsers.findOne( { email : credentials.email})
                 if(!result){
                     throw new Error("No user Found with Email Please Sign Up...!")
                 }

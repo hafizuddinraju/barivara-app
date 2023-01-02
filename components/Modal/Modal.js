@@ -1,13 +1,31 @@
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { addBooking } from "../../lib/helperBooking";
 
 const Modal = ({ setModal, modal }) => {
-   const{data:session}= useSession();
-   console.log(session);
-    const handleBooking = ()=>{
+  const { data: session } = useSession();
+  const router = useRouter();
+  console.log(session);
+  const handleBooking = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const phone = form.phone.value;
 
+    const booking = {
+      picture: modal?.picture,
+      price: modal?.price,
+      phone: phone,
+      quantity: 0,
+      email: session?.user?.email,
+      product_id: modal?._id,
+    };
+    const res = await addBooking(booking);
+    if (res) {
+      router.push("/dashboard/booking");
     }
-    return (
-        <>
+  };
+  return (
+    <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
@@ -30,16 +48,8 @@ const Modal = ({ setModal, modal }) => {
             />
 
             <input
-              name="name"
-              defaultValue={session?.user?.name}
-              type="text"
-              readOnly
-              className="input w-full text-gray-800 input-bordered"
-            />
-            
-            <input
-              name="email"
-              type="text"
+              name="Price"
+              type="number"
               defaultValue={modal?.price}
               readOnly
               className="input w-full text-gray-800 input-bordered"
@@ -50,12 +60,7 @@ const Modal = ({ setModal, modal }) => {
               placeholder="Phone Number"
               className="input text-gray-800 w-full input-bordered"
             />
-            <input
-              name="location"
-              type="text"
-              placeholder="meeting Location"
-              className="input text-gray-800 w-full input-bordered"
-            />
+
             <br />
 
             <input
@@ -67,7 +72,7 @@ const Modal = ({ setModal, modal }) => {
         </div>
       </div>
     </>
-    );
+  );
 };
 
 export default Modal;

@@ -1,10 +1,11 @@
 import { hash } from "bcryptjs";
-import Users from "../model/Schema";
+import AllUsers from "../model/userSchema";
+
 
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await Users.find({});
+    const users = await AllUsers.find({});
     if (!users) return res.status(404).json({ error: "Data not Found" });
     res.status(200).json(users)
   } catch (error) {
@@ -15,7 +16,7 @@ export const getUser = async (req, res) => {
   try {
     const {userId} = req.query;
     if(userId){
-      const user = await Users.findById(userId);
+      const user = await AllUsers.findById(userId);
       res.status(200).json(user);
     }
     res.status(404).json({ error: "User not Selected" });
@@ -31,7 +32,7 @@ export const postUser = async(req, res)=> {
     const {username, email, role, password} = formData;
     if (!formData)
       return res.status(404).json({ error: "Form Data Not Provided...!" });
-    Users.create({ username, email, role, password : await hash(password, 12)}, function (err, data) {
+    AllUsers.create({ username, email, role, password : await hash(password, 12)}, function (err, data) {
       return res.status(200).json(data);
     });
   } catch (error) {
@@ -46,7 +47,7 @@ export const putUser = async(req, res)=> {
     const formData = req.body;
 
     if (userId && formData) {
-      const user = await Users.findByIdAndUpdate(userId, formData);
+      const user = await AllUsers.findByIdAndUpdate(userId, formData);
       res.status(200).json(user);
     }
     res.status(404).json({ error: "User Not Selected...!" });
@@ -61,7 +62,7 @@ export async function deleteUser(req, res) {
     const { userId } = req.query;
 
     if (userId) {
-      const user = await Users.findByIdAndDelete(userId);
+      const user = await AllUsers.findByIdAndDelete(userId);
       return res.status(200).json(user);
     }
 
