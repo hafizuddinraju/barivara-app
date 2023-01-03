@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
-import { fetchRooms } from "../../features/Rooms/roomsSlice";
+import { fetchRooms } from "../../features/rooms/roomsSlice";
 
 
 
