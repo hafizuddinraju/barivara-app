@@ -1,4 +1,4 @@
-import connectMongo from "../../../database/conn";
+import connectMongo from "../../../dataBase/conn";
 import { getUsers, postUser } from "../../../dataBase/controllerUsers";
 
 
