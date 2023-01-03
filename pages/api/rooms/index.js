@@ -10,16 +10,16 @@ export default async function handler(req, res) {
     switch(method){
         case 'GET' :
             //res.status(200).json({method,name:'Get'})
-            getRooms(req, res)
+           await getRooms(req, res)
             break;
         case 'POST':
-            postRoom(req, res)
+           await postRoom(req, res)
             break;
         case 'PUT':
-            putRoom(req, res)
+           await putRoom(req, res)
             break;
         case 'DELETE':
-            deleteRoom(req, res)
+          await  deleteRoom(req, res)
             break;
         default : 
             res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
