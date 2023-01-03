@@ -1,5 +1,5 @@
 import connectMongo from '../../../dataBase/conn'
- import { getRooms, postRoom, putRoom, deleteRoom } from '../../../database/controller';
+ import { getRooms, postRoom, putRoom, deleteRoom } from '../../../dataBase/controller';
 
 export default async function handler(req, res) {
     connectMongo().catch(() => res.status(405).json({ error: "Error in the Connection"}))
