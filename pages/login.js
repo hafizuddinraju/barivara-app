@@ -5,14 +5,17 @@ import styles from './styles/Form.module.css';
 import Image from 'next/image'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useState } from 'react';
-import { signIn, signOut } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { useFormik } from 'formik';
 import login_validate from '../lib/validate';
 import { useRouter } from 'next/router';
 import LayoutLogin from '../layout/layoutLogin';
+import { updateUser } from '../lib/helperUser';
 
 
 export default function Login(){
+   const {data:session} = useSession()
+//    console.log(session?.user?.email);
 
     const [show, setShow] = useState(false)
     const router = useRouter()
@@ -41,14 +44,28 @@ export default function Login(){
     }
 
     // Google Handler function
-    async function handleGoogleSignin(){
-        signIn('google', { callbackUrl : "/"})
-    }
+    // async function handleGoogleSignin(){
+        
+    //     // console.log('click')
+    //     // const rl={
+    //     //     username:session?.user?.name,
+    //     //     email:session?.user?.email,
+    //     //     role:'user'
+    //     // }
+    //     // console.log(rl);
+    //     signIn('google',{
+    //         role:'user'
+    //     })
+     
+    // //   await  updateUser(session?.user?.email, rl )
+        
+      
+    // }
 
-    // Github Login 
-    async function handleGithubSignin(){
-        signIn('github', { callbackUrl : "/"})
-    }
+    // // Github Login 
+    // async function handleGithubSignin(){
+    //     signIn('github', { callbackUrl : "/"})
+    // }
 
     return (
         <LayoutLogin>
@@ -101,11 +118,11 @@ export default function Login(){
                         Login
                     </button>
                 </div>
-                <div className="input-button border border-green-50">
+                {/* <div className="input-button border border-green-50">
                     <button type='button' onClick={handleGoogleSignin} className={styles.button_custom}>
                         Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} ></Image>
                     </button>
-                </div>
+                </div> */}
                 
             </form>
 

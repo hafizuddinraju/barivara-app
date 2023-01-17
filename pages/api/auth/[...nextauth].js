@@ -4,8 +4,11 @@ import connectMongo from "../../../dataBase/conn";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { compare } from 'bcryptjs';
 import AllUsers from "../../../model/userSchema";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../../../lib/mongodb";
 
 export default NextAuth({
+    // adapter:MongoDBAdapter(clientPromise),
     providers:[
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -35,6 +38,10 @@ export default NextAuth({
             }
         })
     ],
+    pages:{
+        signIn:'/login',
+        error:'/login'
+    },
     secret:process.env.JWT_SECRET,
     session: {
         strategy: 'jwt',
