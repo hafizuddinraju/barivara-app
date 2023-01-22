@@ -10,17 +10,15 @@ import { getRoom } from '../../lib/helper';
 import Spinner from '../../components/Spinner';
 const SingleRoom = () => {
   const router = useRouter()
-  const data = router.asPath.slice(7,200)
-  if(!data){
-    return <Spinner></Spinner>
-  }
+  const data = router.query.roomId;
+ 
   console.log(data)
   const [modal, setModal] = useState({});
   const [roomData, setRoomData] = useState({})
   useEffect(()=>{
     getRoom(data).then(res => setRoomData(res))
 
-  },[data])
+  },[router.query.roomId])
   
    const {data:session} = useSession()
    console.log(session)
@@ -32,6 +30,13 @@ const SingleRoom = () => {
     }
     const handleChange = ()=>{
       
+    }
+    if(!data){
+      return <Spinner></Spinner>
+    }
+    if(!roomData){
+      return <Spinner></Spinner>
+
     }
     return (
         <div>
