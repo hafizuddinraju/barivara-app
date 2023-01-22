@@ -16,7 +16,7 @@ export const getRoom = async (req, res) => {
       const room = await Rooms.findById(roomId);
       res.status(200).json(room);
     }
-    res.status(404).json({ error: "Room not Selected" });
+    // res.status(404).json({ error: "Room not Selected" });
   } catch (error) {
     res.status(404).json({ error: "Cannot get the Room...!" });
   }
